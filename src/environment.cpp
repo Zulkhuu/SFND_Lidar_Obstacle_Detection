@@ -84,12 +84,12 @@ void cityBlock(pcl::visualization::PCLVisualizer::Ptr& viewer, ProcessPointCloud
     // ----------------------------------------------------
 
     // Experiment with the ? values and find what works best
-    pcl::PointCloud<pcl::PointXYZI>::Ptr filterCloud = pointProcessorI->FilterCloud(inputCloud, 0.4 , Eigen::Vector4f(-10, -6, -2, 1), Eigen::Vector4f(25, 6, 0.5, 1));
+    pcl::PointCloud<pcl::PointXYZI>::Ptr filterCloud = pointProcessorI->FilterCloud(inputCloud, 0.2 , Eigen::Vector4f(-10, -6, -2, 1), Eigen::Vector4f(25, 6, 0.5, 1));
 
     std::pair<pcl::PointCloud<pcl::PointXYZI>::Ptr, pcl::PointCloud<pcl::PointXYZI>::Ptr> segmentCloud = pointProcessorI->Ransac(filterCloud, 100, 0.3);
     renderPointCloud(viewer,segmentCloud.second,"planeCloud",Color(0,1,0));
 
-    std::vector<pcl::PointCloud<pcl::PointXYZI>::Ptr> cloudClusters = pointProcessorI->EucledianClustering(segmentCloud.first, 0.5, 20, 300);
+    std::vector<pcl::PointCloud<pcl::PointXYZI>::Ptr> cloudClusters = pointProcessorI->EucledianClustering(segmentCloud.first, 0.4, 10, 500);
 
     int clusterId = 0;
     std::vector<Color> colors = {Color(1,0,0), Color(1,1,0), Color(0,0,1)};
